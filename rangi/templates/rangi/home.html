@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax | welcome</title>
+</head>
+<body>
+<button id="button">Get company</button>
+<h1>List of companies.</h1>
+<div id = "companies">
+
+</div>
+
+</body>
+<script>
+    document.getElementById('button').addEventListener('click',loadcompany);
+    function loadcompany() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET','{% url 'rangi:rangi-create' %}',true);
+
+        xhr.onload = function () {
+            if (this.status == 200){
+                var companies = JSON.parse(this.responseText);
+                output = '';
+
+                for (var i in companies){
+                    output += '<div class ="companies">' +
+                            '<ul>' +
+                            '<li> ID :'+companies[i].color_type+'</li>' +
+                            '<li> ID :'+companies[i].rangi+'</li>' +
+                            '</ul>' +
+                            '</div>';
+                }
+
+                document.getElementById('companies').innerHTML = output;
+
+            }
+        }
+        xhr.send();
+    }
+</script>
+</html>

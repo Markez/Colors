@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax | register</title>
+</head>
+<body>
+<h1>Here is registration.</h1>
+<form id = 'user_form'>
+    {% csrf_token %}
+    <div>
+        <input id = "username" type="text">
+        <label for="username">Color Type</label>
+    </div>
+    <div>
+        <input id = "email" type="text">
+        <label for="email">color</label>
+    </div>
+    <div>
+        <select id = "company">
+                {% for i in company %}
+
+                    <option value="{{i.id}}">{{ i }}</option>
+                {% endfor %}
+        </select>
+        <label for="company">Brand</label>
+    </div>
+    <div>
+        <input type="submit" value="submit">
+    </div>
+
+</form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+   {% comment %} document.addEventListener("DOMContentLoaded",loadcompany);
+    function loadcompany(){
+
+    }{% endcomment %}
+    $(document).on('submit','form#user_form',function (e) {
+        e.preventDefault();
+        console.log($('#company').val());
+        $.ajax({
+            type:'POST',
+            url : '',
+
+            data : {
+                color_type : $('#username').val(),
+                rangi : $('#email').val(),
+                brand : $('#company').val(),
+                csrfmiddlewaretoken : $('input[name = csrfmiddlewaretoken]').val()
+            },
+            success:function(){
+                alert("New Rangi succesfully created");
+        },
+        error:function () {
+                alert("Something is wrong with your forms")
+
+        }
+
+        });
+
+    })
+
+</script>
+</html>
