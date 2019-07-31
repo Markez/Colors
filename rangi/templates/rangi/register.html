@@ -1,87 +1,39 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ajax | register</title>
-</head>
-<body>
-<h1>Here is registration.</h1>
-<form id = 'user_form'>
+    <head>
+        <meta charset="UTF-8">
+        <title>ajax | register</title>
 
-    <div>
-        <input id = "username" type="text">
-        <label for="username">Username</label>
-    </div>
-    <div>
-        <input id = "email" type="email">
-        <label for="email">Email</label>
-    </div>
-    <div>
-        <input id = "password" type="password">
-        <label for="password">Password</label>
-    </div>
-    <div>
-        <input type="submit" value="submit">
-    </div>
+        {# include favicon#}
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    </head>
+    <body>
+        <h1>Here is registration.</h1>
+        <form method="post" action="{% url 'user_create' %}" class="registerUser" id = "user_form">
+            {% csrf_token %}
+            <div>
+                <input id = "username" type="text" name="username">
+                <label for="username">Username</label>
+            </div>
+            <div>
+                <input id = "email" type="email" name="email">
+                <label for="email">Email</label>
+            </div>
+            <div>
+                <input id = "password" type="password" name="password">
+                <label for="password">Password</label>
+            </div>
+            <div>
+                <input type="submit" value="submit">
+            </div>
 
-</form>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-    function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-var csrftoken = getCookie('csrftoken');
-
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
-</script>
-<script>
-    console.log(csrftoken);
-    $(document).on('submit','form#user_form',function (e) {
-        e.preventDefault();
-        $.ajax({
-            type:'POST',
-            url : '',
-            data : {
-                username : $('#username').val(),
-                email : $('#email').val(),
-                password : $('#password').val(),
-                csrfmiddlewaretoken : $('input[name = csrfmiddlewaretoken]').val()
-            },
-            success:function(){
-                alert("New user succesfully created");
-        },
-        error:function () {
-                alert("Something is wrong")
-
-        }
-
-        });
-
-    })
-
-</script>
+        </form>
+    </body>
+    <footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        {#for submission#}
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    </footer>
 </html>

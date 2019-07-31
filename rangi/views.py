@@ -59,8 +59,6 @@ class CreateCompany(View):
         return HttpResponse('')
 
 
-
-
 class CreateUser(View):
     template_name = 'rangi/register.html'
 
@@ -68,16 +66,19 @@ class CreateUser(View):
         return render(request,'rangi/register.html')
 
     @method_decorator(ensure_csrf_cookie, name="dispatch")
-    def post(self,request):
+    def post(self, request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
 
-        User.objects.create(
-            username = username,
-            email = email,
-            password = password
-        )
-        return HttpResponse('')
+        message = "Ready to process this. Username is " + username + ", Email is " + email + " and password is *****"
+
+        # User.objects.create(
+        #     username = username,
+        #     email = email,
+        #     password = password
+        # )
+        print(message)
+        return HttpResponse("passed")
 
 
